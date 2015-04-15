@@ -35,24 +35,20 @@ Enemy.prototype.render = function() {
 
 
 var Player = function(x,y) {
-    console.trace('player instantiated!!');
-    this.sprite = 'images/char-boy.png';
+    this.sprite = 'images/char-cat-girl.png';
     this.x = x;
     this.y = y;
+    //initially the player is stationary
+    this.deltaX = 0;
+    this.deltaY = 0;
 };
 
 // maybe check player state, as well as for collisions?
-Player.prototype.update = function(dt) {
-    // if (this.x > CANVAS_WIDTH + 100) {
-      this.x = 200;
-      this.y = 420;
-    // }
-    // this.x += this.speed * dt;
+Player.prototype.update = function() {
+    console.log(this.deltaX);
 
-    this.top = this.y;
-    this.left = this.x;
-    this.bottom = this.y + WIDTH;
-    this.right = this.x + WIDTH;
+    this.x += this.deltaX;
+    this.y += this.deltaY;
 }
 
 Player.prototype.render = function() {
@@ -61,24 +57,24 @@ Player.prototype.render = function() {
 // TODO
 Player.prototype.handleInput = function(keyPressed) {
     switch(keyPressed) {
-
         case 'left':
-            this.x = -20;
+            console.log('left pressed!');
+            this.deltaX = -10;
             break;
-
         case 'up':
-            this.y = 20;
+            console.log('up pressed!');
+            this.deltaY = -20;
             break;
-
         case 'right':
-            this.x = 20;
+            console.log('right pressed!');
+            this.deltaX = 20;
             break;
-
         case 'down':
-            this.y = 20;
+            console.log('down pressed!');
+            this.deltaY = 20;
             break;
-
         default:
+            console.log('no key pressed!');
             break;
     }
 }
