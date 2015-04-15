@@ -1,7 +1,6 @@
 var CANVAS_WIDTH = 505;
 var WIDTH = 60;
 
-
 // Enemies our player must avoid
 var Enemy = function(x,y) {
     // The image/sprite for our enemies uses a helper to easily load images
@@ -33,7 +32,6 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
-
 var Player = function(x,y) {
     this.sprite = 'images/char-cat-girl.png';
     this.x = x;
@@ -45,41 +43,55 @@ var Player = function(x,y) {
 
 // maybe check player state, as well as for collisions?
 Player.prototype.update = function() {
-    console.log(this.deltaX);
+        // player attempts to move off the left edge of the board
+    if(this.x + this.deltaX < 0) {
+        this.x = 0;
+    }
 
-    this.x += this.deltaX;
-    this.y += this.deltaY;
+    // player attempts to move off the right edge of the board
+    else if(this.x + this.deltaX > 405) {
+        this.x = 404;
+    }
+
+    // player attempts to move off the top edge of the board
+    else if(this.y + this.deltaY < 0) {
+        this.y = 0;
+    }
+
+    // player attempts to move off the bottom edge of the board
+    else if(this.y + this.deltaY > 435) {
+        this.y = 435;
+    }
+
+    else {
+        this.x += this.deltaX;
+        this.y += this.deltaY;
+    }
+    // reset current movement
+    this.deltaX = 0;
+    this.deltaX = 0;
 }
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
-// TODO
-Player.prototype.handleInput = function(keyPressed) {
-    switch(keyPressed) {
-        case 'left':
-            console.log('left pressed!');
-            this.deltaX = -10;
-            break;
-        case 'up':
-            console.log('up pressed!');
-            this.deltaY = -20;
-            break;
-        case 'right':
-            console.log('right pressed!');
-            this.deltaX = 20;
-            break;
-        case 'down':
-            console.log('down pressed!');
-            this.deltaY = 20;
-            break;
-        default:
-            console.log('no key pressed!');
-            break;
+
+Player.prototype.handleInput = function(key) {
+    if (key === 'left' && this.x > 0) {
+        this.x -= 100;
+    }
+    else if (key === 'right' && this.x < 405) {
+        this.x += 100;
+    }
+    else if (key === 'up' && this.y > 0) {
+        this.y -= 80;
+    }
+    else if (key === 'down' && this.y < 435) {
+        this.y += 80;
     }
 }
 
-var player = new Player(360, 320);
+var player = new Player(200, 320);
 var firstEnemy = new Enemy(-75, 60);
 var secondEnemy = new Enemy(-180, 145);
 var thirdEnemy = new Enemy(-105, 230);
@@ -94,6 +106,5 @@ document.addEventListener('keyup', function(e) {
         39: 'right',
         40: 'down'
     };
-
     player.handleInput(allowedKeys[e.keyCode]);
 });
