@@ -10,7 +10,7 @@ var Enemy = function(x,y) {
     this.y = y;
     //enemy speed.
     // TODO: optimize it
-    this.speed = (Math.random() * (300-100)) + 150;
+    this.speed = (Math.random() * (300-100)) + 70;
 };
 
 // Update the enemy's position
@@ -20,6 +20,7 @@ Enemy.prototype.update = function(dt) {
       this.x = -125;
       this.y = this.y;
     }
+    //ensures the game will run at the same speed on any computer
     this.x += this.speed * dt;
 
     this.top = this.y;
@@ -40,12 +41,13 @@ var Player = function(x,y) {
     this.y = y;
 };
 
+// maybe check player state, as well as for collisions?
 Player.prototype.update = function(dt) {
-    if (this.x > CANVAS_WIDTH + 100) {
-      this.x = 55;
-      this.y = 105;
-    }
-    this.x += this.speed * dt;
+    // if (this.x > CANVAS_WIDTH + 100) {
+      this.x = 200;
+      this.y = 420;
+    // }
+    // this.x += this.speed * dt;
 
     this.top = this.y;
     this.left = this.x;
@@ -58,10 +60,30 @@ Player.prototype.render = function() {
 }
 // TODO
 Player.prototype.handleInput = function(keyPressed) {
+    switch(keyPressed) {
 
+        case 'left':
+            this.x = -20;
+            break;
+
+        case 'up':
+            this.y = 20;
+            break;
+
+        case 'right':
+            this.x = 20;
+            break;
+
+        case 'down':
+            this.y = 20;
+            break;
+
+        default:
+            break;
+    }
 }
 
-var player = new Player(15, 45);
+var player = new Player(360, 320);
 var firstEnemy = new Enemy(-75, 60);
 var secondEnemy = new Enemy(-180, 145);
 var thirdEnemy = new Enemy(-105, 230);
