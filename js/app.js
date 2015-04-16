@@ -1,5 +1,6 @@
 var CANVAS_WIDTH = 505;
 var WIDTH = 60;
+var score = 0;
 
 // Enemies our player must avoid
 var Enemy = function(x,y,speed) {
@@ -61,6 +62,10 @@ Player.prototype.update = function() {
         this.y = 435;
     }
 
+    // player reaches the water
+    else if (this.y < 1) {
+        this.reset();
+    }
     else {
         this.x += this.deltaX;
         this.y += this.deltaY;
@@ -90,10 +95,12 @@ Player.prototype.handleInput = function(key) {
     }
 }
 
-// Player.prototype.reset() = function() {
-//     this.x = 200;
-//     this.y = 320;
-// }
+Player.prototype.reset = function() {
+    this.x = 200;
+    this.y = 320;
+    score += 20;
+    document.getElementById('score').innerHTML = 'score: ' + score;
+}
 
 var player = new Player(200, 320);
 
