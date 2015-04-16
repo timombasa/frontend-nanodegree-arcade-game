@@ -2,14 +2,12 @@ var CANVAS_WIDTH = 505;
 var WIDTH = 60;
 
 // Enemies our player must avoid
-var Enemy = function(x,y) {
+var Enemy = function(x,y,speed) {
     // The image/sprite for our enemies uses a helper to easily load images
     this.sprite = 'images/enemy-bug.png';
     this.x = x;
     this.y = y;
-    //enemy speed.
-    // TODO: optimize it
-    this.speed = (Math.random() * (300-100)) + 70;
+    this.speed = speed;
 };
 
 // Update the enemy's position
@@ -82,6 +80,7 @@ Player.prototype.handleInput = function(key) {
     }
     else if (key === 'right' && this.x < 405) {
         this.x += 100;
+        // this.reset();
     }
     else if (key === 'up' && this.y > 0) {
         this.y -= 80;
@@ -91,11 +90,24 @@ Player.prototype.handleInput = function(key) {
     }
 }
 
+// Player.prototype.reset() = function() {
+//     this.x = 200;
+//     this.y = 320;
+// }
+
 var player = new Player(200, 320);
-var firstEnemy = new Enemy(-75, 60);
-var secondEnemy = new Enemy(-180, 145);
-var thirdEnemy = new Enemy(-105, 230);
-var allEnemies = [firstEnemy, secondEnemy, thirdEnemy];
+
+// create an array and add Enemies to it
+var allEnemies = [];
+
+(function createEnemies() {
+    allEnemies.push(new Enemy(-55, 60, 220));
+    allEnemies.push(new Enemy(-305, 60, 210));
+    allEnemies.push(new Enemy(1, 145, 80));
+    allEnemies.push(new Enemy(-150, 145, 70));
+    allEnemies.push(new Enemy(-10, 230, 250));
+    allEnemies.push(new Enemy(-240, 230, 250));
+}());
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method.
