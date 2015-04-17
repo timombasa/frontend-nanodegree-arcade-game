@@ -1,10 +1,9 @@
 var CANVAS_WIDTH = 505;
-var WIDTH = 60;
 var score = 0;
 
 // Enemies our player must avoid
 var Enemy = function(x,y,speed) {
-    // The image/sprite for our enemies uses a helper to easily load images
+    // The image or sprite for our enemies uses a helper to easily load images
     this.sprite = 'images/enemy-bug.png';
     this.x = x;
     this.y = y;
@@ -18,18 +17,29 @@ Enemy.prototype.update = function(dt) {
       this.x = -125;
       this.y = this.y;
     }
-    //ensures the game will run at the same speed on any computer
+    // Make the game will run at the same speed on any computer
     this.x += this.speed * dt;
-
-    this.top = this.y;
-    this.left = this.x;
-    this.bottom = this.y + WIDTH;
-    this.right = this.x + WIDTH;
 }
 
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
+
+// Enemy.prototype.checkCollisions = function(enemy, player) {
+//     // Coordinates in a collision. Player is reset; score decreases by 20
+//     // Enemy and Player have to be on the same row for a collision to occur
+//     if(enemy.y === player.y){
+//         allEnemies.forEach(function(enemy) {
+//             if( player.x < enemy.x + 60 &&
+//                 player.x + 60 > enemy.x &&
+//                 player.y < enemy.y + 60 &&
+//                 player.y + 50 > enemy.y) {
+//                         player.reset();
+//                         score -= 20;
+//             }
+//         });
+//     }
+// }
 
 var Player = function(x,y) {
     this.sprite = 'images/char-cat-girl.png';
@@ -40,43 +50,35 @@ var Player = function(x,y) {
     this.deltaY = 0;
 };
 
-// maybe check player state, as well as for collisions?
+
 Player.prototype.update = function() {
-        // player attempts to move off the left edge of the board
+    // Player attempts to move past the left edge of the board
     if(this.x + this.deltaX < 0) {
         this.x = 0;
     }
 
-    // player attempts to move off the right edge of the board
+    // Player attempts to move past the right edge of the board
     else if(this.x + this.deltaX > 405) {
         this.x = 404;
     }
 
-    // player attempts to move off the top edge of the board
-    else if(this.y + this.deltaY < 0) {
-        this.y = 0;
-    }
-
-    // player attempts to move off the bottom edge of the board
+    // Player attempts to move past the bottom edge of the board
     else if(this.y + this.deltaY > 435) {
         this.y = 435;
     }
 
-    // player reaches the water
+    // Player reaches the water
     else if (this.y < 1) {
         score += 20;
         this.reset();
     }
-    // move the player within the canvas boundaries
+    // Move the player within the canvas boundaries
     else {
         this.x += this.deltaX;
         this.y += this.deltaY;
     }
-
+    // Update the score everytime the Player is updated
     document.getElementById('score').innerHTML = 'score: ' + score;
-    // // reset current movement
-    // this.deltaX = 0;
-    // this.deltaX = 0;
 }
 
 Player.prototype.render = function() {
@@ -89,7 +91,6 @@ Player.prototype.handleInput = function(key) {
     }
     else if (key === 'right' && this.x < 405) {
         this.x += 100;
-        // this.reset();
     }
     else if (key === 'up' && this.y > 0) {
         this.y -= 80;
@@ -102,13 +103,12 @@ Player.prototype.handleInput = function(key) {
 Player.prototype.reset = function() {
     this.x = 200;
     this.y = 320;
-    // score += 20;
-
 }
 
+// Instantiate the true Player :) R.I.P. B.I.G.
 var player = new Player(200, 320);
 
-// create an array and add Enemies to it
+// Create an array and add Enemies to it
 var allEnemies = [];
 
 (function createEnemies() {
