@@ -64,15 +64,19 @@ Player.prototype.update = function() {
 
     // player reaches the water
     else if (this.y < 1) {
+        score += 20;
         this.reset();
     }
+    // move the player within the canvas boundaries
     else {
         this.x += this.deltaX;
         this.y += this.deltaY;
     }
-    // reset current movement
-    this.deltaX = 0;
-    this.deltaX = 0;
+
+    document.getElementById('score').innerHTML = 'score: ' + score;
+    // // reset current movement
+    // this.deltaX = 0;
+    // this.deltaX = 0;
 }
 
 Player.prototype.render = function() {
@@ -98,8 +102,8 @@ Player.prototype.handleInput = function(key) {
 Player.prototype.reset = function() {
     this.x = 200;
     this.y = 320;
-    score += 20;
-    document.getElementById('score').innerHTML = 'score: ' + score;
+    // score += 20;
+
 }
 
 var player = new Player(200, 320);

@@ -80,7 +80,7 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions();
     }
 
     /* This is called by the update function  and loops through all of the
@@ -95,6 +95,20 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update();
+    }
+
+      function checkCollisions() {
+        // Check if any of the enemies touches the player. Reset the game if that occurs, and decrease the score.
+        // with inspiration from: // https://github.com/joseterrera/frogger/blob/gh-pages/js/engine.js
+        allEnemies.forEach(function(enemy) {
+            if( player.x < enemy.x + 60 &&
+                player.x + 60 > enemy.x &&
+                player.y < enemy.y + 60 &&
+                player.y + 50 > enemy.y) {
+                    player.reset();
+                    score -= 20;
+            }
+        });
     }
 
     /* This function initially draws the "game level", it will then call
