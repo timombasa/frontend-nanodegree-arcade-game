@@ -19,27 +19,11 @@ Enemy.prototype.update = function(dt) {
     }
     // Make the game will run at the same speed on any computer
     this.x += this.speed * dt;
-}
+};
 
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
-
-// Enemy.prototype.checkCollisions = function(enemy, player) {
-//     // Coordinates in a collision. Player is reset; score decreases by 20
-//     // Enemy and Player have to be on the same row for a collision to occur
-//     if(enemy.y === player.y){
-//         allEnemies.forEach(function(enemy) {
-//             if( player.x < enemy.x + 60 &&
-//                 player.x + 60 > enemy.x &&
-//                 player.y < enemy.y + 60 &&
-//                 player.y + 50 > enemy.y) {
-//                         player.reset();
-//                         score -= 20;
-//             }
-//         });
-//     }
-// }
+};
 
 var Player = function(x,y) {
     this.sprite = 'images/char-cat-girl.png';
@@ -56,17 +40,14 @@ Player.prototype.update = function() {
     if(this.x + this.deltaX < 0) {
         this.x = 0;
     }
-
     // Player attempts to move past the right edge of the board
     else if(this.x + this.deltaX > 405) {
         this.x = 404;
     }
-
     // Player attempts to move past the bottom edge of the board
     else if(this.y + this.deltaY > 435) {
         this.y = 435;
     }
-
     // Player reaches the water
     else if (this.y < 1) {
         score += 20;
@@ -79,11 +60,11 @@ Player.prototype.update = function() {
     }
     // Update the score everytime the Player is updated
     document.getElementById('score').innerHTML = 'score: ' + score;
-}
+};
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+};
 
 Player.prototype.handleInput = function(key) {
     if (key === 'left' && this.x > 0) {
@@ -98,12 +79,12 @@ Player.prototype.handleInput = function(key) {
     else if (key === 'down' && this.y < 435) {
         this.y += 80;
     }
-}
+};
 
 Player.prototype.reset = function() {
     this.x = 200;
     this.y = 320;
-}
+};
 
 // Instantiate the true Player :) R.I.P. B.I.G.
 var player = new Player(200, 320);

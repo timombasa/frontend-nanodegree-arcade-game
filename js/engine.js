@@ -98,8 +98,8 @@ var Engine = (function(global) {
     }
 
       function checkCollisions() {
-        // Check if any of the enemies touches the player. Reset the game if that occurs, and decrease the score.
-        // with inspiration from: // https://github.com/joseterrera/frogger/blob/gh-pages/js/engine.js
+        // Coordinates in a collision. Player is reset; score decreases by 20
+        // With inspiration from: // https://github.com/joseterrera/frogger/blob/gh-pages/js/engine.js
         allEnemies.forEach(function(enemy) {
             if( player.x < enemy.x + 60 &&
                 player.x + 60 > enemy.x &&
