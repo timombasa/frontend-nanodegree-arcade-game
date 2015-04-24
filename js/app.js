@@ -15,7 +15,6 @@ var Enemy = function(x,y,speed) {
 Enemy.prototype.update = function(dt) {
     if (this.x > CANVAS_WIDTH + 100) {
       this.x = -125;
-      this.y = this.y;
     }
     // Make the game will run at the same speed on any computer
     this.x += this.speed * dt;
@@ -46,7 +45,7 @@ Player.prototype.update = function() {
     }
     // Player attempts to move past the bottom edge of the board
     else if(this.y + this.deltaY > 435) {
-        this.y = 435;
+        this.y = 320;
     }
     // Player reaches the water
     else if (this.y < 1) {
@@ -68,16 +67,16 @@ Player.prototype.render = function() {
 
 Player.prototype.handleInput = function(key) {
     if (key === 'left' && this.x > 0) {
-        this.x -= 100;
+        this.x -= 101;
     }
     else if (key === 'right' && this.x < 405) {
-        this.x += 100;
+        this.x += 101;
     }
     else if (key === 'up' && this.y > 0) {
-        this.y -= 80;
+        this.y -= 83;
     }
-    else if (key === 'down' && this.y < 435) {
-        this.y += 80;
+    else if (key === 'down' && this.y < 400) {
+        this.y += 83;
     }
 };
 
